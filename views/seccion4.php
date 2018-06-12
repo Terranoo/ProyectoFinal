@@ -59,7 +59,11 @@
     ?>
                                 <div class="<?php echo "div".$key2 ?>">
                                     <h2 style="width:100%"><?php echo $key2 ?></h2>
-                                    <textarea style="width:98%" name="<?php echo $key2 ?>" class="<?php echo $key2 ?>" cols="<?php echo $ancho ?>" rows="<?php echo $lineas ?>"><?php echo $value2 ?></textarea>
+                                    <textarea style="width:98%" 
+                                              name="<?php echo $key2 ?>" 
+                                              class="<?php echo $key2 ?>" 
+                                              cols="<?php echo $ancho ?>" 
+                                              rows="<?php echo $lineas ?>"><?php echo $value2 ?></textarea>
                                 </div>
     <?php
                 }

@@ -81,9 +81,9 @@ $(document).ready(function() {
     }
     
     function dblClickCurso() {
-        if ($("#tipoUsuario").val() >= seguridad) {
+        if ($("#tipoUsuario").val() >= seguridad) {                /* ***** Si nuestro nivle de seguridad nos lo permite entramos a la modificacion de los datos ****** */
             var valorOriginal = [];
-            if ( $("#edicion").val() === "" ) {
+            if ( $("#edicion").val() === "" ) {                    /* ***** Si no estamos ya editando creamos lo elementos y empezamos la edicion ***** */
                 $(".anadir").remove();
                 $(".quitar").remove();
                 $("#edicion").val("activo");
