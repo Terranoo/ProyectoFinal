@@ -7,7 +7,7 @@
 <div class="principal">
 
     <?php
-            $idAlumno = $_SESSION['idUsuario'];
+            $idAlumno = $_SESSION['idUsuario']; /* *************** */
             if (isset($_POST["cambios"])) { 
                 $us=new Service();
                 $datos=json_decode($_POST["cambios"]);
