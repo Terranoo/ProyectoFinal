@@ -7,8 +7,6 @@
 <div class="principal">
 
     <?php
-
-
             $idAlumno = $_SESSION['idUsuario'];
             if (isset($_POST["cambios"])) { 
                 $us=new Service();
