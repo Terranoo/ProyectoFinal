@@ -291,6 +291,22 @@ $(document).ready(function() {
         console.log($(".btEnviar").val());
         return true;
     });
+    $(".inicioCurso").focus(function(event) {
+        event.preventDefault();
+        var fecha = $("<input>");
+        fecha.prop("type", "date");
+        fecha.prop("name", "inFecha");
+        fecha.prop("id", "inFecha");
+        fecha.on({change: function() {
+            $(this).prev().val($(this).val());
+            $(this).remove();
+        }, focusout: function() {
+            $("#inFecha").remove();
+        }
+        });
+        $(this).parent().append(fecha);
+        $("#inFecha").focus();
+    });
 
 });
 
@@ -300,4 +316,4 @@ function showMessage(message){
     $(".messages").html("").show();
     $(".messages").html(message);
 }
- 
+

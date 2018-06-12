@@ -55,7 +55,9 @@
                       $eol="\n";  
                     }  
                     $cad=wordwrap($cadena, $ancho, $eol, 1);  
-                    $lineas=substr_count($cad,$eol)+1;  
+                    $lineas=substr_count($cad,$eol)+1; 
+                    if ($key2 === "descripcionCurso" && $lineas < 2 )
+                        $lineas = 4;
     ?>
                                 <div class="<?php echo "div".$key2 ?>">
                                     <h2 style="width:100%"><?php echo $key2 ?></h2>
@@ -79,6 +81,7 @@
         }
     ?>
             </section>
+            <input type="text" id="inFecha">
     
             <div class="Enviar">                        <!--  Final de la seccion: otro boton para guardar todos los cambios si ha habido cambios en el orden.   -->
                 <button form="frmGuardarCursos" class="btEnviar" type="submit" name="cambios">Guardar cambios</button>
