@@ -297,15 +297,21 @@ $(document).ready(function() {
         fecha.prop("type", "date");
         fecha.prop("name", "inFecha");
         fecha.prop("id", "inFecha");
+        fecha.val($(this).val());
         fecha.on({change: function() {
             $(this).prev().val($(this).val());
+            $(this).prev().fadeIn();
             $(this).remove();
         }, focusout: function() {
+            console.log($(this).prev());
+            $(this).prev().fadeIn();
             $("#inFecha").remove();
         }
         });
+        $(this).hide();
         $(this).parent().append(fecha);
-        $("#inFecha").focus();
+        //$("#inFecha").focus();
+        $("#inFecha").select();
     });
 
 });

@@ -81,7 +81,7 @@
         }
     ?>
             </section>
-            <input type="text" id="inFecha">
+            <!-- <input type="text" id="inFecha">  ->
     
             <div class="Enviar">                        <!--  Final de la seccion: otro boton para guardar todos los cambios si ha habido cambios en el orden.   -->
                 <button form="frmGuardarCursos" class="btEnviar" type="submit" name="cambios">Guardar cambios</button>
