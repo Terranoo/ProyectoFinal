@@ -76,11 +76,15 @@ class Service {
 	}
 
 	public function putContenidoWeb($array) {
-            $query = "DELETE FROM contenidoseccionesweb WHERE idSeccion=".$array[0][1][1];
-            $result = $this->db->query($query);
+            $query = "DELETE FROM contenidoseccionesweb WHERE idSeccion=?;";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("i", $array[0][1][1]);
+            $stmt->execute();
             foreach ($array as $value) {
-                $query = "INSERT INTO contenidoseccionesweb (idSeccion, titulo, contenido) VALUES ('".$value[1][1]."', '".$value[2][1]."', '".$value[3][1]."')";
-                $result = $this->db->query($query);
+                $query = "INSERT INTO contenidoseccionesweb (idSeccion, titulo, contenido) VALUES (?, ?, ?);";
+                $stmt = $this->db->prepare($query);
+                $stmt->bind_param("iss", $value[1][1], $value[2][1], $value[3][1]);
+                $stmt->execute();
             }
             $this->db->close();
 	}
@@ -118,10 +122,12 @@ class Service {
 	}
 
 	public function updateCurso($id, $nombre, $descripcion, $inicio, $duracion, $logo) {
-            $query = "UPDATE cursos SET nombreCurso='" . $nombre . "', descripcionCurso='" . $descripcion . "', inicioCurso='" . $inicio . "', duracionCurso='" . $duracion . "', logoCurso='" . $logo . "' WHERE idCurso = " . $id; 
-            $result = $this->db->query($query);
+            $query = "UPDATE cursos SET nombreCurso = ?, descripcionCurso = ?, inicioCurso = ?, duracionCurso = ?, logoCurso = ? ' WHERE idCurso = ?;"; 
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("sssisi", $nombre, $descripcion, $inicio, $duracion, $logo, $id);
+            $stmt->execute();
             $this->db->close();
-            return $result;
+            return $stmt;
 	}
 
 	public function putCursos($array) {
