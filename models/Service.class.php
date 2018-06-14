@@ -23,7 +23,7 @@ class Service {
 		}
 	}
 	public function validaUsuario($usuario, $password) {
-		$query = "SELECT idUsuario, nombre, contrasenya FROM usuarios WHERE nombre=?";
+		$query = "SELECT idUsuario, Nombre, contrasenya FROM usuarios WHERE Nombre=?";
                 $stmt = $this->db->prepare($query);
                 $stmt->bind_param("s", $usuario);
 		$stmt->execute();
