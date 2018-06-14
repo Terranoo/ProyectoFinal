@@ -122,35 +122,44 @@ class Service {
 	}
 
 	public function updateCurso($id, $nombre, $descripcion, $inicio, $duracion, $logo) {
-            $query = "UPDATE cursos SET nombreCurso = ?, descripcionCurso = ?, inicioCurso = ?, duracionCurso = ?, logoCurso = ? ' WHERE idCurso = ?;"; 
+            $query = "UPDATE cursos SET nombreCurso = ?, descripcionCurso = ?, inicioCurso = ?, duracionCurso = ?, logoCurso = ? WHERE idCurso = ?;"; 
             $stmt = $this->db->prepare($query);
             $stmt->bind_param("sssisi", $nombre, $descripcion, $inicio, $duracion, $logo, $id);
-            $stmt->execute();
+            $result = $stmt->execute();
             $this->db->close();
-            return $stmt;
+            return $result;
 	}
 
 	public function putCursos($array) {
             $query = "DELETE FROM cursos WHERE true;";
-            $result = $this->db->query($query);
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
             foreach ($array as $value) {
-                $query = "INSERT INTO cursos (nombreCurso, descripcionCurso, inicioCurso, duracionCurso, logoCurso) VALUES ('".$value[1][1]."', '".$value[2][1]."', '".$value[3][1]."', '".$value[4][1]."', '".$value[5][1]."')";
-                $result = $this->db->query($query);
+                $query = "INSERT INTO cursos (nombreCurso, descripcionCurso, inicioCurso, duracionCurso, logoCurso) VALUES (?, ?, ?, ?, ?)";
+                $stmt = $this->db->prepare($query);
+                $stmt->bind_param("sssis", $value[1][1], $value[2][1], $value[3][1], $value[4][1], $value[5][1]);
+                $stmt->execute();
             }
             $this->db->commit();
             $this->db->close();
 	}
 
 	public function getAlumno($id) {
-            $query = "SELECT idUsuario, nivelSeguridad, Nombre, Apellidos, Direccion, CP, Localidad, Provincia, Telefono, email, contrasenya FROM usuarios WHERE idUsuario=".$id;
-            $result = $this->db->query($query);
+            $query = "SELECT idUsuario, nivelSeguridad, Nombre, Apellidos, Direccion, CP, Localidad, Provincia, Telefono, email, contrasenya FROM usuarios WHERE idUsuario=?;";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
             $fila = $result->fetch_assoc();
             $this->db->close();
             return $fila;
 	}
-	public function getFotoAlumno($id) {
-            $query = "SELECT fotoAlumno FROM usuarios WHERE idUsuario=".$id;
-            $result = $this->db->query($query);
+	public function getFotoAlumno($id) {    // ******** se necesit la funcion esta ??? ************
+            $query = "SELECT fotoAlumno FROM usuarios WHERE idUsuario=?;";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
             $fila = $result->fetch_assoc();
             $this->db->close();
             return $fila;
