@@ -165,13 +165,18 @@ class Service {
             return $fila;
 	}
 	public function putFotoAlumno($id, $foto) {
-            $query = "UPDATE usuarios SET fotoAlumno='$foto'  WHERE idUsuario=".$id;
-            $result = $this->db->query($query);
+            $query = "UPDATE usuarios SET fotoAlumno='$foto'  WHERE idUsuario=?;";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
 	}
         
 	public function getAlumnos() {
 		$query = "SELECT idUsuario, nivelSeguridad, Nombre, Apellidos, Direccion, CP, Localidad, Provincia, Telefono, email, contrasenya FROM usuarios;"; 
-		$result = $this->db->query($query);
+                $stmt = $this->db->prepare($query);
+                $stmt->execute();
+                $result = $stmt->get_result();
                 $datos = array();
                 while ($fila = $result->fetch_assoc()) {
                     $datos[] = $fila;
@@ -180,38 +185,41 @@ class Service {
 	}
 
         public function updateUsuario($array) {
-            $id=$array[0][1];
-            $seg=$array[1][1];
-            $nom=$array[2][1];
-            $ape=$array[3][1];
-            $dir=$array[4][1];
-            $cp=$array[5][1];
-            $loc=$array[6][1];
-            $pro=$array[7][1];
-            $tel=$array[8][1];
-            $ema=$array[9][1];
-            $query = "UPDATE usuarios SET nombre='$nom', apellidos='$ape', nivelSeguridad='$seg', Direccion='$dir', cp='$cp', Localidad='$loc', Provincia='$pro', telefono='$tel', email='$ema' WHERE idUsuario=".$id;
-            $result = $this->db->query($query);
-            if (!$result){
-                return false;
-            }
-        if ( $array[10][1] !== "" ) {
-                $pas=password_hash($array[10][1], PASSWORD_DEFAULT);
-                $query = "UPDATE usuarios SET contrasenya='$pas' WHERE idUsuario=".$id;
-                $result = $this->db->query($query);
-                if ($result){
-                    return true;
-                }else{
-                    return false;
+            $id=$array[1][1];
+            $seg=$array[2][1];
+            $nom=$array[3][1];
+            $ape=$array[4][1];
+            $dir=$array[5][1];
+            $cp=$array[6][1];
+            $loc=$array[7][1];
+            $pro=$array[8][1];
+            $tel=$array[9][1];
+            $ema=$array[10][1];
+            $pas=$array[11][1];
+            $query = "UPDATE usuarios SET nombre = ?, apellidos = ?, nivelSeguridad = ?, Direccion = ?, cp = ?, Localidad = ?, Provincia = ?, telefono = ?, email = ? WHERE idUsuario = ?;";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("ssissssssi", $nom, $ape, $seg, $dir, $cp, $loc, $pro, $tel, $ema, $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ( $pas !== "" ) {
+                $pas=password_hash($pas, PASSWORD_DEFAULT);
+                $query = "UPDATE usuarios SET contrasenya='$pas' WHERE idUsuario=?;";
+                $stmt = $this->db->prepare($query);
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                return $result;
                 }
-            }
 	}
 	public function getCursosAlumno($id) {
 		$query = "SELECT cursoscompletados.idCursoRealizado as idCursoHecho, cursoscompletados.idUsuario as IdUser, cursos.idCurso as idCurso, cursos.nombreCurso as nomCurso, cursos.inicioCurso as iniCurso, cursos.duracionCurso as durCurso, cursoscompletados.Comentario as comCurso, cursoscompletados.Nota as notCurso "
                         . " FROM cursoscompletados "
                         . "LEFT JOIN cursos on cursos.idCurso=cursoscompletados.idCurso "
-                        . "WHERE idUsuario=".$id; 
-		$result = $this->db->query($query);
+                        . "WHERE idUsuario=?;"; 
+                $stmt = $this->db->prepare($query);
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                $result = $stmt->get_result();
                 $datos = array();
                 while ($fila = $result->fetch_assoc()) {
                     $datos[] = $fila;

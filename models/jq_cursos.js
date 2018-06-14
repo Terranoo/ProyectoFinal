@@ -150,12 +150,13 @@ $(document).ready(function() {
                         //mientras enviamos el archivo
                         beforeSend: function(){
                             message = $("<span class='before'>Subiendo la imagen, por favor espere...</span>");
-                            showMessage(message)        
+                            showMessage(message);        
                         },
                         //una vez finalizado correctamente
                         success: function(data){
                             message = $("<span class='success'>La imagen ha subido correctamente.</span>");
                             showMessage(message);
+                            location.reload();
                         },
                         //si ha ocurrido un error
                         error: function(){
@@ -164,7 +165,7 @@ $(document).ready(function() {
                         }
                     });
                     //guardarCurso($(this).parents(".curso").find(".logoCurso"));
-                    $(this).parents("td").find("img").prop("src","../resources/Imagenes/" + fileName)
+                    $(this).parents("td").find("img").prop("src","../resources/Imagenes/" + fileName   + '?dt=' + (new Date()).getTime() );
                     console.log($(this).parents("td").find("img"));
                 });
                         // ***********************************************************************************************

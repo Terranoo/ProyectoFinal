@@ -60,11 +60,12 @@
     
             <section id="seccion" class="seccion">
                 <form id="frmSelectAlumno" class="frmSelectAlumno" action="" method="post">
+                    <input type="hidden" name="idAlumno" value="<?php echo $idAlumno  ?>" >
                     <select id="selectAlumno" class="valorCampo idAlumno>" name="idAlumno">
     <?php
         foreach ($datosAlumnos as $key => $value) {
     ?>
-                        <option value="<?php echo $value["idUsuario"] ?>" <?php echo (($value["idUsuario"] === $idAlumno)? "selected":"") ?> >
+                        <option value="<?php echo $value["idUsuario"] ?>" <?php echo (($value["idUsuario"] === intval($idAlumno))? "selected":"") ?> >
                             <?php echo $value["idUsuario"]." >>> ".$value["Nombre"].' '.$value["Apellidos"] ?>
                         </option>
     <?php
