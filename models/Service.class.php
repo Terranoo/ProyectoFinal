@@ -12,8 +12,10 @@ class Service {
 
         public function altaUsuario($nom, $ape, $pass, $seg, $dir, $cp, $loc, $pro, $tel, $ema) {
 		$query = "INSERT INTO usuarios (nombre, apellidos, contrasenya, nivelSeguridad, Direccion, cp, Localidad, Provincia, telefono, email)". 
-                        " VALUES ('$nom', '$ape', '$pass', '$seg', '$dir', '$cp', '$loc', '$pro', '$tel', '$ema')";
-		$result = $this->db->query($query);
+                        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		$stmt = $this->db->prepare($query);
+                $stmt->bind_param("sssissssss", $nom, $ape, $pass, $seg, $dir, $cp, $loc, $pro, $tel, $ema);
+		$result = $stmt->execute();
 		if ($result){
 			return true;
 		}else{
@@ -21,20 +23,28 @@ class Service {
 		}
 	}
 	public function validaUsuario($usuario, $password) {
-		$query = "SELECT idUsuario, nombre, contrasenya FROM usuarios WHERE nombre='$usuario'";
-		$result = $this->db->query($query);
+		$query = "SELECT idUsuario, nombre, contrasenya FROM usuarios WHERE nombre=?";
+                $stmt = $this->db->prepare($query);
+                $stmt->bind_param("s", $usuario);
+		$stmt->execute();
+                $result = $stmt->get_result();
 		if ($result->num_rows == 1){
-			$fila = $result->fetch_assoc();
-			if (password_verify($password, $fila['contrasenya'])){
-				return $fila;
-			}else{
-				return '0';
-			}
-		}
+                    $fila = $result->fetch_assoc();
+                    if (password_verify($password, $fila['contrasenya'])){
+                            return $fila;
+                    }else{
+                            return '0';
+                    }
+		} else {
+                    return '0';
+                }
 	}
 	public function nivelSeguridad($id) {
-		$query = "SELECT nivelSeguridad FROM usuarios WHERE idUsuario='$id'";
-		$result = $this->db->query($query);
+		$query = "SELECT nivelSeguridad FROM usuarios WHERE idUsuario=?;";
+                $stmt = $this->db->prepare($query);
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+		$result = $stmt->get_result();
 		if ($result->num_rows == 1){
                     $fila = $result->fetch_assoc();
                     return $fila['nivelSeguridad'];
@@ -42,7 +52,9 @@ class Service {
 	}
 	public function getSeccionesWeb() {
 		$query = "SELECT nombreSeccion as Seccion FROM seccionesweb;"; 
-		$result = $this->db->query($query);
+                $stmt = $this->db->prepare($query);
+                $stmt->execute();
+		$result = $stmt->get_result();
                 $datos = array();
                 while ($fila = $result->fetch_assoc()) {
                     $datos[] = $fila;
@@ -51,8 +63,11 @@ class Service {
 	}
 
 	public function getContenidoWeb($seccion) {
-		$query = "SELECT contenidoseccionesweb.idContenido as idContenido, contenidoseccionesweb.idSeccion as idSec, seccionesweb.nombreSeccion as Seccion, titulo, contenido FROM contenidoseccionesweb INNER JOIN seccionesweb on contenidoseccionesweb.idSeccion=seccionesweb.idSeccion where contenidoseccionesweb.idSeccion = ".$seccion; 
-		$result = $this->db->query($query);
+		$query = "SELECT contenidoseccionesweb.idContenido as idContenido, contenidoseccionesweb.idSeccion as idSec, seccionesweb.nombreSeccion as Seccion, titulo, contenido FROM contenidoseccionesweb INNER JOIN seccionesweb on contenidoseccionesweb.idSeccion=seccionesweb.idSeccion where contenidoseccionesweb.idSeccion = ?;"; 
+                $stmt = $this->db->prepare($query);
+                $stmt->bind_param("i", $seccion);
+                $stmt->execute();
+		$result = $stmt->get_result();
                 $datos = array();
                 while ($fila = $result->fetch_assoc()) {
                     $datos[] = $fila;
@@ -71,27 +86,35 @@ class Service {
 	}
 
 	public function updateContenidoWeb($id, $titulo, $contenido) {
-            $query = "UPDATE contenidoseccionesweb SET " . $titulo . "='" . $contenido . "' " . "WHERE idContenido = " . $id; 
-            $result = $this->db->query($query);
+            $query = "UPDATE contenidoseccionesweb SET " . $titulo . "= ? WHERE idContenido = ?;"; 
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("si", $contenido, $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
             $this->db->close();
             return $result;
 	}
 
         public function getCursos() {
-		$query = "SELECT idCurso, nombreCurso, descripcionCurso, inicioCurso, duracionCurso, logoCurso FROM cursos;"; 
-		$result = $this->db->query($query);
-                $datos = array();
-                while ($fila = $result->fetch_assoc()) {
-                    $datos[] = $fila;
-                }
-                return $datos;
+            $query = "SELECT idCurso, nombreCurso, descripcionCurso, inicioCurso, duracionCurso, logoCurso FROM cursos;"; 
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $datos = array();
+            while ($fila = $result->fetch_assoc()) {
+                $datos[] = $fila;
+            }
+            return $datos;
 	}
         
 	public function getCurso($id) {
-		$query = "SELECT idCurso, nombreCurso, descripcionCurso, inicioCurso, duracionCurso, logoCurso FROM cursos WHERE idCurso=".$id; 
-		$result = $this->db->query($query);
-                $fila = $result->fetch_assoc();
-                return $fila;
+            $query = "SELECT idCurso, nombreCurso, descripcionCurso, inicioCurso, duracionCurso, logoCurso FROM cursos WHERE idCurso=?;"; 
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $fila = $result->fetch_assoc();
+            return $fila;
 	}
 
 	public function updateCurso($id, $nombre, $descripcion, $inicio, $duracion, $logo) {
