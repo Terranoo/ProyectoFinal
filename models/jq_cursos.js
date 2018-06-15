@@ -11,43 +11,40 @@ $(document).ready(function() {
 
     var bgNormal="url('../resources/Imagenes/fotoportada.jpg') no-repeat fixed";
     var bgClaro="url('../resources/Imagenes/fotoportada_claro.jpg') no-repeat fixed";
-    var seguridad = 2;
+    var seguridad = 2;          /* *** Necesitamos tener un nivel de seguridad 2 por lo menos para hacer modificaciones *** */
 
     function guardarCurso(puntoPartida) {
-                    console.log(puntoPartida.length);
-                    if ( puntoPartida.length !== 1 ) {
-                        puntoPartida = $(this);
-                    }
-                    //var puntoPartida = $(this);
-                    if (confirm("Vamos a actualizar la base de datos. Confirma la accion.")) {
-                        //console.log( typeof puntoPartida !== 'undefined' );
-                        if (puntoPartida.parents(".curso").find(".idCurso").val() > 0) {
-                            $.post("../models/grabarRegistro.php",
-                            {
-                              id: puntoPartida.parents(".curso").find(".idCurso").val(),
-                              nombre: puntoPartida.parents(".curso").find(".nombreCurso").val(),
-                              descripcion: puntoPartida.parents(".curso").find(".descripcionCurso").val(),
-                              inicio: puntoPartida.parents(".curso").find(".inicioCurso").val(),
-                              duracion: puntoPartida.parents(".curso").find(".duracionCurso").val(),
-                              logo: puntoPartida.parents(".curso").find(".logoCurso").val(),
-                              ctl: "cursos"
-                            },
-                            function(data,status){
-                                alert("Data: " + data + "\nStatus: " + status);
-                            });
-                        } else {
-                            alert("Para modificar un registro vacio primero debe pulsar el botón <Guardar Cambios>")
-                        };
-                        $(".curso").find("textarea").prop("disabled", true);
-                        $(".botones").children("img").remove();
-                        $("#edicion").val("");
-                    };
-                };
+        if ( puntoPartida.length !== 1 ) {
+            puntoPartida = $(this);             // *** Si llamamos a la funcion sin argumentos ... indicamos que el objeto desde el que trabajamos es el actual 
+        }
+        if (confirm("Vamos a actualizar la base de datos. Confirma la accion.")) {
+            if (puntoPartida.parents(".curso").find(".idCurso").val() > 0) {        // *** Si tratamos con un curso con id, es decir, que no lo acabamos de crear
+                $.post("../models/grabarRegistro.php",
+                {
+                  id: puntoPartida.parents(".curso").find(".idCurso").val(),
+                  nombre: puntoPartida.parents(".curso").find(".nombreCurso").val(),
+                  descripcion: puntoPartida.parents(".curso").find(".descripcionCurso").val(),
+                  inicio: puntoPartida.parents(".curso").find(".inicioCurso").val(),
+                  duracion: puntoPartida.parents(".curso").find(".duracionCurso").val(),
+                  logo: puntoPartida.parents(".curso").find(".logoCurso").val(),
+                  ctl: "cursos"
+                },
+                function(data,status){
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
+            } else {        // *** Si lo acabamos de crear y todavia no esta guardado en la base de datos
+                alert("Para modificar un registro vacio primero debe pulsar el botón <Guardar Cambios>")
+            };
+            $(".curso").find("textarea").prop("disabled", true);
+            $(".botones").children("img").remove();
+            $("#edicion").val("");
+        };
+    };
     
     function clickCurso() {
-        if ($("#tipoUsuario").val() >= seguridad) {
-            if ( $("#edicion").val() === "" ) {
-                $(".curso").css("border", "3px solid yellow");
+        if ($("#tipoUsuario").val() >= seguridad) {                             // *** Si estamos autorizados por el nivelUsuario
+            if ( $("#edicion").val() === "" ) {                                 // *** Si no estamos editando ningun curso
+                $(".curso").css("border", "3px solid yellow");                  // *** Quitamos bordes y botones a todos para luego crearlos donde conviene
                 $(this).css("border", "3px solid blue");
                 $(".anadir").remove();
                 $(".quitar").remove();
@@ -59,7 +56,7 @@ $(document).ready(function() {
                 anadir.css("width", "70");
                 anadir.addClass("anadir");
                 anadir.on("click", anadirCurso);
-                $(this).append(anadir);
+                $(this).append(anadir);                                         // *** Creamos un boton añadir y lo añadimos a nuestra pagina
 
                 var quitar = $("<img>");
                 quitar.prop("src", "../resources/Imagenes/menos.png");
@@ -67,13 +64,12 @@ $(document).ready(function() {
                 quitar.css("width", "60");
                 quitar.addClass("quitar");
                 quitar.on("click", quitarCurso);
-                $(this).append(quitar);
+                $(this).append(quitar);                                         // *** Creamos un boton quitar y lo añadimos a nuestra pagina
 
-            } else {
+            } else {                                                            // *** Si estamos editando un curso
                 if ($(this).find("textarea").prop("disabled") === false) {
                     $(".curso").find("textarea").prop("disabled", true);
                     $(".curso").find(".frmImagen").hide();
-//                    $(".cursoSel").attr("class", "curso");
                     $("#edicion").val("");
                 }
             }
@@ -94,8 +90,6 @@ $(document).ready(function() {
                     valorOriginal.push($(this).val());
                 });
 
-/* *********************************************************************************************************** */
-
                 var cambiarLogo = $("<form>");
                 cambiarLogo.prop("enctype","multipart/form-data");
                 cambiarLogo.prop("class", "frmImagen")
@@ -112,8 +106,6 @@ $(document).ready(function() {
                 cambiarLogo.append(msg);
                 $(this).find("td:first-child").append(cambiarLogo);
                 
-                
-                //  **************************************************************************************************
                 //función que observa los cambios del campo file y obtiene información
                 $(':file').change(function() {
                     //obtenemos un array con los datos del archivo
@@ -164,13 +156,9 @@ $(document).ready(function() {
                             showMessage(message);
                         }
                     });
-                    //guardarCurso($(this).parents(".curso").find(".logoCurso"));
                     $(this).parents("td").find("img").prop("src","../resources/Imagenes/" + fileName   + '?dt=' + (new Date()).getTime() );
-                    console.log($(this).parents("td").find("img"));
                 });
-                        // ***********************************************************************************************
                 
-/* ************************************************************************************************ */
               
                 var guardar = $("<img>");
                 guardar.prop("src", "../resources/Imagenes/ok.png");
@@ -270,7 +258,6 @@ $(document).ready(function() {
     $(".curso").dblclick(dblClickCurso);
     $(".curso").click(clickCurso);
     $(".frmGuardarCursos").submit(function(event) {
-        //event.preventDefault(event);
         var datos = [];
         var array = [];
         var tit;
@@ -289,7 +276,6 @@ $(document).ready(function() {
         console.log(datos);
         var myJSON = JSON.stringify(datos);
         $(".btEnviar").val(myJSON);
-        console.log($(".btEnviar").val());
         return true;
     });
     $(".inicioCurso").focus(function(event) {
@@ -311,7 +297,6 @@ $(document).ready(function() {
         });
         $(this).hide();
         $(this).parent().append(fecha);
-        //$("#inFecha").focus();
         $("#inFecha").select();
     });
 
