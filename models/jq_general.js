@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 	var bgNormal="url('../resources/Imagenes/fotoportada.jpg') no-repeat fixed";
 	var bgClaro="url('../resources/Imagenes/fotoportada_claro.jpg') no-repeat fixed";
-        var seguridad = 3;
+        var seguridad = 3;          // *** solo los administradores pueden modificar estas secciones (1, 2, 3)
         
     
     function anadirNoticia() {

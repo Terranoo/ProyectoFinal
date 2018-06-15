@@ -77,9 +77,9 @@ $(document).ready(function() {
     }
     
     function dblClickCurso() {
-        if ($("#tipoUsuario").val() >= seguridad) {                /* ***** Si nuestro nivle de seguridad nos lo permite entramos a la modificacion de los datos ****** */
+        if ($("#tipoUsuario").val() >= seguridad) {                             // *** Si nuestro nivle de seguridad nos lo permite entramos a la modificacion de los datos 
             var valorOriginal = [];
-            if ( $("#edicion").val() === "" ) {                    /* ***** Si no estamos ya editando creamos lo elementos y empezamos la edicion ***** */
+            if ( $("#edicion").val() === "" ) {                                 // *** Si no estamos ya editando creamos lo elementos y empezamos la edicion *****
                 $(".anadir").remove();
                 $(".quitar").remove();
                 $("#edicion").val("activo");
@@ -87,9 +87,10 @@ $(document).ready(function() {
                 $(this).find("textarea").prop("disabled", false);
                 $(this).find(".idCurso").prop("disabled", true);
                 $(this).find("textarea").each(function() {
-                    valorOriginal.push($(this).val());
+                    valorOriginal.push($(this).val());                          // *** Guardamos los datos actuales de los textarea para poderlos restaurar en caso de no confirmar el cambio
                 });
 
+                /* *** Creamos un formulario para seleccionar una imagen del curso y poderla subir al servidor *** */
                 var cambiarLogo = $("<form>");
                 cambiarLogo.prop("enctype","multipart/form-data");
                 cambiarLogo.prop("class", "frmImagen")
@@ -185,11 +186,11 @@ $(document).ready(function() {
                     $("#edicion").val("");
                 });
 
-                $(this).find(".botones").append(guardar);
-                $(this).find(".botones").append(cancelar);
+                $(this).find(".botones").append(guardar);                       // *** Añadimos botones que acabamos de crear para guardar
+                $(this).find(".botones").append(cancelar);                      // *** o cancelar los cambios 
 
                 
-            } else {
+            } else {                                                            // *** Si hacemos doble click mientras estamos editando un curso
                 if ($(this).find("textarea").prop("disabled") === false) {
                     $(".curso").find("textarea").prop("disabled", true);
                     $("#edicion").val("");
