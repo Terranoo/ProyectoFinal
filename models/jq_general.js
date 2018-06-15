@@ -262,6 +262,56 @@ $(document).ready(function() {
 
             return true;
         });
+        $("#frmRegistro").submit(function(event) {
+            //event.preventDefault(event);
+            var regExp, errores = "";
+            regExp    = new RegExp( /[a-z]{3,200}/i );
+            if ( !regExp.test( $("#regNom").val() ) ) {
+                errores += "Error en el nombre"+"\r";
+            };
+            regExp    = new RegExp( /[a-z]{3,200}/i );
+            if ( !regExp.test( $("#regApe").val() ) ) {
+                errores += "Error en el apellido"+"\r";
+            };
+            regExp    = new RegExp( /[a-z]{3,200}/i );
+            if ( !regExp.test( $("#regPas").val() ) ) {
+                errores += "Error en el password"+"\r";
+            };
+            regExp    = new RegExp( /[0-9]{1,1}/i );
+            if ( !regExp.test( $("#regSeg").val() ) ) {
+                errores += "Error en el nivel de seguridad"+"\r";
+            };
+            regExp    = new RegExp( /[a-z]{3,200}/i );
+            if ( !regExp.test( $("#regDir").val() ) ) {
+                errores += "Error en la direccion"+"\r";
+            };
+            regExp    = new RegExp( /[0-9]{5,5}/i );
+            if ( !regExp.test( $("#regCp").val() ) ) {
+                errores += "Error en el cp"+"\r";
+            };
+            regExp    = new RegExp( /[a-z]{3,200}/i );
+            if ( !regExp.test( $("#regLoc").val() ) ) {
+                errores += "Error en la localidad"+"\r";
+            };
+            regExp    = new RegExp( /[a-z]{3,200}/i );
+            if ( !regExp.test( $("#regPro").val() ) ) {
+                errores += "Error en la provincia"+"\r";
+            };
+            regExp    = new RegExp( /[0-9]{3,3}.[0-9]{2,2}.[0-9]{2,2}.[0-9]{2,2}/i );
+            if ( !regExp.test( $("#regTel").val() ) ) {
+                errores += "Error en el telefono"+"\r";
+            };
+            regExp    = new RegExp( /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/ );
+            if ( !regExp.test( $("#regEma").val() ) ) {
+                errores += "Error en el email"+"\r";
+            };
+            if (errores === "") {
+                return true
+            } else {
+                alert(errores);
+                return false;
+            }
+        });
         
         
         /* ********************** Definir el orden de las noticias *************  */
