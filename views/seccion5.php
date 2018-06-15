@@ -137,6 +137,7 @@
                 
                 <!-- ***** En esta seccion empezamos a listar los cursos realizador por el alumno mostrado ***** -->
                 <div class="cursos">
+                    <!-- ** Formulario de los cursos realizados por el alumno ** -->
                     <form action="" method="post" id="frmCursosAlumno">
                         <input type="hidden" name="idAlumno" value="<?php echo $idAlumno ?>">
                         <table>
@@ -150,8 +151,8 @@
                             <?php foreach ($cursosAlumno as $value) { ?>
                             <tr>
                                 <td style="width: 10%">
-                                    <input class="idCursoHecho" name="idCursoHecho" type="hidden" value="<?php echo $value['idCursoHecho'] ?>" >
-                                    <select class="idCurso" name="idCurso">
+                                    <input class="idCursoHecho" name="idCursoHecho" type="hidden" value="<?php echo $value['idCursoHecho'] ?>" >      <!-- Este campo se crea para que al actualizar se conserve el alumno activo -->
+                                    <select class="idCurso" name="idCurso">  <!-- Un select para escoger el curso. Se activa por jquery -->
                                         <?php foreach ($cursos as $value2) { ?>
                                         <option value="<?php echo $value2["idCurso"] ?>" <?php echo ( ($value["nomCurso"]===$value2["nombreCurso"])? "selected":"") ?> ><?php echo $value2["nombreCurso"] ?></option>
                                         <?php        } ?>
@@ -159,15 +160,19 @@
                                 </td>
                                 <td style="width: 15%"><?php echo $value["iniCurso"] ?></td>
                                 <td style="width: 15%"><?php echo $value["durCurso"] ?></td>
+                                <!-- La fecha de Inicio y la duración son datos del curso, o sea, no se cambian individualmente -->
+                                <!-- Un comentario del profesor sobre el curso y la nota alcanzada. Se activan tambien por jquery -->
                                 <td style="width: 55%"><input class="comCurso" name="comCurso" type="text" value="<?php echo $value['comCurso'] ?>" size="65" maxlength="250"></td>
                                 <td style="width: 10%"><input class="notCurso" name="notCurso" type="number" value="<?php echo $value['notCurso'] ?>" min="0" max="10"></td>
                             </tr>
                             <?php    } ?>
                         </table>
+                        <!-- Incluimos una imagen para que al hacer clic se pueda añadir un curso vacio -->
                         <img id="mas" src="../resources/Imagenes/mas.png">
-                        <!-- <img id="menos" src="../resources/Imagenes/menos.png">  -->
                         <input id="btCursos" type="hidden" name="cursosAlumno">
                     </form>
+                    
+                    <!-- Este formulario es el que se manda cuando se pulsa la imagen mas.png -->
                     <form id="poneCurso" method="post">
                         <input type="hidden" name="idAlumno" value="<?php echo $idAlumno ?>">
                         <input id="idPoneCurso" type="hidden" name="idPoneCurso">
