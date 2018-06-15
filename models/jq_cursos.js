@@ -149,7 +149,7 @@ $(document).ready(function() {
                         success: function(data){
                             message = $("<span class='success'>La imagen ha subido correctamente.</span>");
                             showMessage(message);
-                            location.reload();
+                            //location.reload();
                         },
                         //si ha ocurrido un error
                         error: function(){
@@ -157,7 +157,7 @@ $(document).ready(function() {
                             showMessage(message);
                         }
                     });
-                    $(this).parents("td").find("img").prop("src","../resources/Imagenes/" + fileName   + '?dt=' + (new Date()).getTime() );
+                    $(this).parents("td").find("img").prop("src","../resources/Imagenes/" + fileName );
                 });
                 
               
