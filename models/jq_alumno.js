@@ -6,8 +6,9 @@ $(document).ready(function() {
 
 	var bgNormal="url('../resources/Imagenes/fotoportada.jpg') no-repeat fixed";
 	var bgClaro="url('../resources/Imagenes/fotoportada_claro.jpg') no-repeat fixed";
-        var seguridad = 1;
+        var seguridad = 1;  /* *** Se requiere un nivel de seguridad 1 para entrar y modificar datos *** */
         
+        /* *** Si no somos profesor o adeministrador (2/3) se ocultan los controles *** */
         if ( $("#tipoUsuario").val() < 2 ) {
             $("#selectAlumno").hide();
             $(".nivelSeguridad").prop("disabled", true);
@@ -18,7 +19,6 @@ $(document).ready(function() {
             $("#frmCursosAlumno").find("select").prop("disabled", true);
         }
         
-/* ************************** Iniciamos las acciones a realizar una vez cargada la pagina ***************  */
 	$("body").css("background", bgNormal);
         $(".alumno").css("background", bgClaro);
         $(".Enviar").hide();
@@ -41,11 +41,8 @@ $(document).ready(function() {
             return true;
         });
         $(".frmGuardarAlumno").submit(function(event){
-            //event.preventDefault(event);
-            
             var datos = [];
-//            datos.push(["idUsuario", $("#selectAlumno").val()]);
-            console.log($(".frmGuardarAlumno").children("input"));
+            /* *** Repasamos todos los inputs del alumno para crear un array que convertimos en json y pasamos como post al formulario *** */
             $(".alumno").find("input").each(function() {
                 datos.push([$(this)[0].classList[1], $(this).val()]);
             });
@@ -57,10 +54,11 @@ $(document).ready(function() {
 
         $("#frmCursosAlumno").submit(function() {
             var array = [];
-            var idCH = $("#frmCursosAlumno").find(".idCursoHecho");
-            var idC = $("#frmCursosAlumno").find(".idCurso");
-            var comC = $("#frmCursosAlumno").find(".comCurso");
-            var notC = $("#frmCursosAlumno").find(".notCurso");
+            var idCH = $("#frmCursosAlumno").find(".idCursoHecho");  // *** Seleccionamos todos los idCursoRealizado
+            var idC = $("#frmCursosAlumno").find(".idCurso");        // *** Seleccionamos todos los idCurso
+            var comC = $("#frmCursosAlumno").find(".comCurso");      // *** Seleccionamos todos los comentarioCurso
+            var notC = $("#frmCursosAlumno").find(".notCurso");      // *** Seleccionamos todos los notaCurso
+            /* *** Repasamos todos los datos seleccionados para crear un array que convertimos en json y pasamos como post al formulario *** */
             array = [];
             for (i=0; i<idCH.length ; i++) {
                 array.push( [idCH[i].value, idC[i].value, comC[i].value, notC[i].value] );
@@ -69,7 +67,7 @@ $(document).ready(function() {
             $("#btCursos").val(myJSON);
             return true;
         });
-        $("#mas").click(function() {
+        $("#mas").click(function() {                                // *** Añade un curso vacio
             $("#idPoneCurso").val( $("#selectAlumno").val() );
             $("#poneCurso").submit();
         });
