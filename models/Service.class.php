@@ -6,7 +6,10 @@ class Service {
 
 	public function __construct() {
             $this->servicio=array();
-            $this->db=new mysqli(DB_SERVIDOR, DB_USUARIO, DB_PASS, DB_DB);
+            $this->db = new mysqli(DB_SERVIDOR, DB_USUARIO, DB_PASS, DB_DB);
+            if ($this->db->connect_errno) {
+                die("Error de conexión con la base de datos: Error (". $this->db->connect_errno .") " . $this->db->connect_error);
+            }
             $this->db->query("SET NAMES 'utf8'");
 	}
 
