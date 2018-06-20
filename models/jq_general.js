@@ -299,7 +299,7 @@ $(document).ready(function() {
             };
             regExp    = new RegExp( /[0-9]{3,3}.[0-9]{2,2}.[0-9]{2,2}.[0-9]{2,2}/i );
             if ( !regExp.test( $("#regTel").val() ) ) {
-                errores += "Error en el telefono"+"\r";
+                errores += "Error en el telefono: xxx.xx.xx.xx"+"\r";
             };
             regExp    = new RegExp( /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/ );
             if ( !regExp.test( $("#regEma").val() ) ) {
