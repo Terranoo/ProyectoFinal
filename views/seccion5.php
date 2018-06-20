@@ -134,7 +134,7 @@
                     ******* actualizar los datos en la base de datos del servidor *** -->
                     <button form="frmGuardarAlumno" class="btEnviar" type="submit" name="cambios">Guardar cambios</button>
                 </form>
-                
+                <br />
                 <!-- ***** En esta seccion empezamos a listar los cursos realizador por el alumno mostrado ***** -->
                 <div class="cursos">
                     <!-- ** Formulario de los cursos realizados por el alumno ** -->

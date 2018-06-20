@@ -146,6 +146,7 @@ $(document).ready(function() {
         $(".contNoticia").prop( "disabled", true );
         $(".noticia").find("textarea").hide();
         $(".Enviar").hide();
+        $(".btEnviar").hide();
         $("#btAlert").click(function() {
             $(".alerta").remove();
         });

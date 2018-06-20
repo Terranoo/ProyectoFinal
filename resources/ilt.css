@@ -17,16 +17,17 @@ table, th, td {
 */
 body {
 	min-width: 250px; 
-	background-position: center top;      /*  border: 1px solid blue;  */
-	padding: 1%;
+	/*background-position: center top;*/      /*  border: 1px solid blue;  */
+	/*padding: 1%;*/
 }
 header {
     position: fixed;
     top: 0px;
-    width: 97%;
+    margin: 0px;
+    width: 100%;
     z-index: 10;
     padding: 10px 50px 10px 50px;
-    background: url('../resources/Imagenes/fotoportada.jpg') no-repeat; 
+    background: url('../resources/Imagenes/fotoportada.jpg') no-repeat fixed; 
 }
 a {
         display: block

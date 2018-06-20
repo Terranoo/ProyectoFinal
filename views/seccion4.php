@@ -26,7 +26,7 @@
                 <?php foreach ($datosSeccion as $key => $value) { // **** Un bucle para mostrar cada uno de los  cursos ***   ?>
                 <table class="curso">
                     <tr>
-                        <td style = "text-align: left;">
+                        <td style = "text-align: center;">
                             <img src="../resources/Imagenes/<?php echo $datosSeccion[$key]["logoCurso"] ?>" class="imgLogoCurso" >
                         </td>
                         <td>
