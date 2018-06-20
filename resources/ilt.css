@@ -20,11 +20,24 @@ body {
 	background-position: center top;      /*  border: 1px solid blue;  */
 	padding: 1%;
 }
+header {
+    position: fixed;
+    top: 0px;
+    width: 97%;
+    z-index: 10;
+    padding: 10px 50px 10px 50px;
+    background: url('../resources/Imagenes/fotoportada.jpg') no-repeat; 
+}
 a {
         display: block
 }
 textarea {
     display: inline;
+}
+#contenido {
+    position: relative;
+    top: 150px;
+    width: 99%;
 }
 .main {
 	width: 100%;

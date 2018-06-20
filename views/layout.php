@@ -10,6 +10,7 @@
         <script src="../models/jq_alumno.js"></script>
 </head>
 <body>
+    <header>
 <!--  **********  Empezamos el Proyecto Final  **************** -->
 
 <?php
@@ -135,10 +136,9 @@ if (isset($_SESSION['user'])) {                                   /* ***********
         }
     ?>
     </nav>
-    <br />
-
-
+    </header>
     <div id="contenido">
+        <br />
         <?php echo $contenido ?>
     </div>
 
