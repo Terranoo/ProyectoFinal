@@ -253,7 +253,6 @@ $(document).ready(function() {
 
     $(".curso").css("background", bgClaro);
     $(".Enviar").hide();
-    $(".btEnviar").hide();
     $(".divlogoCurso").hide();
     $(".frmImagen").hide();
     $(".curso").find("textarea").prop("disabled", true);

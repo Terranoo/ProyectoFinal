@@ -21,8 +21,6 @@ $(document).ready(function() {
         
 	$("body").css("background", bgNormal);
         $(".alumno").css("background", bgClaro);
-        $(".Enviar").hide();
-        $(".btEnviar").hide();
         $("#btAlert").click(function() {
             $(".alerta").remove();
         });
